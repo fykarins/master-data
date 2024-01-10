@@ -225,7 +225,6 @@ export const StockPage = () => {
             </Col>
 
             {/* Right Row */}
-
             <Col sm={6}>
               <Form.Group as={Row}>
                 <Form.Label column sm={3}>
@@ -253,22 +252,57 @@ export const StockPage = () => {
                   />
                 </Col>
               </Form.Group>
+              
               <Form.Group as={Row}>
-                <Col sm={3}>
+                <Col sm={6}>
+                  {user.purch_org !== null && (
+                    <Form.Group as={Row} className="mt-5">
+                      <Form.Label column sm={6}>
+                        <b>Purchasing Organization</b>
+                      </Form.Label>
+                      <Col sm={6}>
+                        <Form.Control
+                          type="text"
+                          placeholder="Purchasing Organization"
+                          value={user.purch_org}
+                          disabled
+                        />
+                      </Col>
+                    </Form.Group>
+                  )}
+                  {user.purch_org === null && (
+                    <Form.Group as={Row} className="mt-5">
+                      <Form.Label column sm={6}>
+                        <b>Purchasing Organization</b>
+                      </Form.Label>
+                      <Col sm={6}>
+                        <Form.Control
+                          type="text"
+                          placeholder="Purchasing Organization"
+                          onChange={(e) => {
+                            setVendorCode(e.target.value); 
+                          }}
+                          value={vendorCode} 
+                          onKeyPress={handleKeyPress}
+                        />
+                      </Col>
+                    </Form.Group>
+                 )}
                   <Button className="btn btn-danger" onClick={handleSearch}>
                     Search
                   </Button>
+                  {/* <Col sm={3}>
+                    <Button
+                      className="btn btn-danger"
+                      onClick={() => history.push("/masterdata/vendor-create")}
+                    >
+                      Create
+                    </Button>
+                  </Col> */}
                 </Col>
-                {/* <Col sm={3}>
-                  <Button
-                    className="btn btn-danger"
-                    onClick={() => history.push("/masterdata/vendor-create")}
-                  >
-                    Create
-                  </Button>
-                </Col> */}
               </Form.Group>
             </Col>
+
           </Form.Group>
         </Form>
 
