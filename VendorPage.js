@@ -36,6 +36,7 @@ export const VendorPage = () => {
   // Filter
   const [vendorName, setVendorName] = useState("");
   const [vendorCode, setVendorCode] = useState("");
+  const [valueNmbr, setValueNmbr] = useState(""); //buat deklarasi state
 
   useEffect(() => {
     // Reset on first load
@@ -44,12 +45,15 @@ export const VendorPage = () => {
 
   const filterVendorCode =
     user.vendor_code === null ? vendorCode : user.vendor_code;
+  const filterPurOrg =
+    user.purch_org === null ? valueNmbr : user.purch_org;
 
   const handleSearch = async () => {
     const params = {
       LIFNR: filterVendorCode,
       NAME1: vendorName,
       vendorName: vendorName,
+      purch_org: filterPurOrg, //valueNmbr, //parameter pembacaan u/ melakukan permintaan API
       pageNo: 1,
       pageSize: 10,
     };
@@ -82,6 +86,7 @@ export const VendorPage = () => {
         LIFNR: filterVendorCode,
         NAME1: vendorName,
         vendorName: vendorName,
+        purch_org: filterPurOrg, //valueNmbr, //parameter pembacaan u/ melakukan permintaan API
         pageNo: page,
         pageSize: sizePerPage,
       };
@@ -93,10 +98,14 @@ export const VendorPage = () => {
           response.payload.data.error === "10008" ||
           response.payload.data.error === "10009"
         ) {
+          // Corrected the syntax here
           const action = await showErrorDialog(response.payload.data.message);
           if (action.isConfirmed) await history.push("/logout");
         } else {
-          showErrorDialog(response.payload.data.message);
+          // Corrected the syntax here
+          const action = await showErrorDialog(response.payload.data.message);
+          if (action.isConfirmed) await history.push("/logout");
+          valueNmbr = action.payload.value; // Corrected the syntax here
           setOverlayLoading(false);
         }
       } catch (error) {
@@ -238,9 +247,9 @@ export const VendorPage = () => {
                             type="text"
                             placeholder="Purchasing Organization"
                             onChange={(e) => {
-                              setVendorCode(e.target.value); 
+                              setValueNmbr(e.target.value);  
                             }}
-                            value={vendorCode} 
+                            value={valueNmbr}  
                             onKeyPress={handleKeyPress}
                           />
                         </Col>
