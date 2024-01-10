@@ -41,9 +41,12 @@ export const StockPage = () => {
   const [region, setRegion] = useState("");
   const [validFrom, setValidFrom] = useState("");
   const [validTo, setValidTo] = useState("");
+  const [valueNmbr, setValueNmbr] = useState(""); //buat deklarasi state
 
   const filterVendorCode =
     user.vendor_code === null ? vendorCode : user.vendor_code;
+  const filterPurOrg =
+    user.purch_org === null ? valueNmbr : user.purch_org;
 
   useEffect(() => {
     // Reset on first load
@@ -56,6 +59,7 @@ export const StockPage = () => {
       region_name: region,
       valid_from: validFrom,
       valid_to: validTo,
+      purch_org: filterPurOrg, //valueNmbr, //parameter pembacaan u/ melakukan permintaan API
       pageNo: 1,
       pageSize: 10,
     };
@@ -99,6 +103,7 @@ export const StockPage = () => {
         region_name: region,
         valid_from: validFrom,
         valid_to: validTo,
+        purch_org: filterPurOrg, //valueNmbr,
         pageNo: page,
         pageSize: sizePerPage,
       };
@@ -109,10 +114,15 @@ export const StockPage = () => {
           response.payload.data.error === "10008" ||
           response.payload.data.error === "10009"
         ) {
+          // Corrected the syntax here
           const action = await showErrorDialog(response.payload.data.message);
           if (action.isConfirmed) await history.push("/logout");
         } else {
-          showErrorDialog(response.payload.data.message);
+          // Corrected the syntax here
+          const action = await showErrorDialog(response.payload.data.message);
+          if (action.isConfirmed) await history.push("/logout");
+          valueNmbr = action.payload.value; // Corrected the syntax here
+          setOverlayLoading(false);
         }
       } catch (error) {
         showErrorDialog(error.message);
@@ -280,9 +290,9 @@ export const StockPage = () => {
                           type="text"
                           placeholder="Purchasing Organization"
                           onChange={(e) => {
-                            setVendorCode(e.target.value); 
+                            setValueNmbr(e.target.value);  
                           }}
-                          value={vendorCode} 
+                          value={valueNmbr}  
                           onKeyPress={handleKeyPress}
                         />
                       </Col>
