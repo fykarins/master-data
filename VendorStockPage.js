@@ -74,11 +74,15 @@ export const VendorStockPage = () => {
         response.payload.data.error === "10008" ||
         response.payload.data.error === "10009"
       ) {
+        // Corrected the syntax here
         const action = await showErrorDialog(response.payload.data.message);
         if (action.isConfirmed) await history.push("/logout");
       } else {
-        showErrorDialog(response.payload.data.message);
-        setOverlayLoading(false);
+        // Corrected the syntax here
+      const action = await showErrorDialog(response.payload.data.message);
+      if (action.isConfirmed) await history.push("/logout");
+      valueNmbr = action.payload.value; // Corrected the syntax here
+      setOverlayLoading(false);
       }
     } catch (error) {
       showErrorDialog(error.message);
