@@ -205,7 +205,6 @@ export const DepoPage = () => {
             </Col>
 
             {/* Right Row */}
-
             <Col sm={6}>
               <Form.Group as={Row}>
                 <Form.Label column sm={3}>
@@ -221,29 +220,11 @@ export const DepoPage = () => {
                   />
                 </Col>
               </Form.Group>
-
-              <Form.Group as={Row}>
-                <Col sm={6}>
-                  {user.purch_org !== null && (
-                    <Form.Group as={Row} className="mt-5">
-                      <Form.Label column sm={6}>
-                        <b>Purchasing Organization</b>
-                      </Form.Label>
-                      <Col sm={6}>
-                        <Form.Control
-                          type="text"
-                          placeholder="Purchasing Organization"
-                          value={user.purch_org}
-                          disabled
-                        />
-                      </Col>
-                    </Form.Group>
-                  )}
-                  {user.purch_org === null && (
-                    <Form.Group as={Row} className="mt-5">
-                      <Form.Label column sm={6}>
-                        <b>Purchasing Organization</b>
-                      </Form.Label>
+              {user.purch_org === null && (
+                <Form.Group as={Row} className="mt-5">
+                  <Form.Label column sm={3}>
+                    <b>Purchasing Organization</b>
+                   </Form.Label>
                       <Col sm={6}>
                         <Form.Control
                           type="text"
@@ -255,12 +236,11 @@ export const DepoPage = () => {
                           onKeyPress={handleKeyPress}
                         />
                       </Col>
-                    </Form.Group>
-                 )}
-                  <Button className="btn btn-danger" onClick={handleSearch}>
-                    Search
-                  </Button>
-                </Col>
+                  </Form.Group>
+              )}
+                <Button className="btn btn-danger" onClick={handleSearch}>
+                  Search
+                </Button>
                 {/* <Col sm={3}>
                   <Button
                     className="btn btn-danger"
@@ -269,7 +249,6 @@ export const DepoPage = () => {
                     Create
                   </Button>
                 </Col> */}
-              </Form.Group>
             </Col>
             
           </Form.Group>
